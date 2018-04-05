@@ -15,7 +15,7 @@ var proxy = {};
 var plugins = [
     new ExtractTextPlugin('app.css'),
     new HtmlWebpackPlugin({
-        // favicon: './favicon.ico', //favicon路径
+        favicon: './favicon.ico', //favicon路径
         filename: './index.html',
         template: "./src/index.html",
         inject: true,
@@ -70,7 +70,8 @@ module.exports = {
             })
         }, {
             test: /\.(jpe?g|png|gif|svg)$/,
-            use: 'url?limit=10000&name=img/[hash].[ext]'
+            // use: 'url?limit=10000&name=img/[hash].[ext]'
+            use: "file-loader"
         }]
     },
     plugins: plugins,
