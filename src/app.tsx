@@ -8,24 +8,34 @@ import { ContentPage } from "./control/content";
 import './public/common.less';
 
 interface HomePageProps {}
-interface HomePageStates {}
+interface HomePageStates {
+  showContent?: boolean;
+}
 
 
 export class HomePage extends Component<HomePageProps,HomePageStates>{
     constructor(props,context){
       super();
-      this.state={};
+      this.state={
+        showContent: true
+      };
+    }
+
+    contentShowOrHide() {
+      this.setState({ showContent: !this.state.showContent })
     }
 
     render() {
       const { Header, Content, Footer } = Layout;
+      const { showContent } = this.state;
       return <div>
               <Layout>
                 <Header className="pageheader">
                   <HeaderPage/>
                 </Header>
                 <Content>
-                  <ContentPage></ContentPage>
+                  {showContent ? <ContentPage/> : undefined}
+                  <button onClick={this.contentShowOrHide.bind(this)}>{"点我一下"}</button>
                 </Content>
                 <Footer>Footer</Footer>
               </Layout>
