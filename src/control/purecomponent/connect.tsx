@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Component } from "react";
 
-export const connect = (mapStateToProps) => (WrappedComponent)=>{
+export const connect = (mapStateToProps?:(state, props)=> void,
+    mapDispatchToProps?:(state, props)=> void) => (WrappedComponent)=>{
     class Connect extends Component<any, any> {
         static contextTypes = {
             store: React.PropTypes.any
@@ -22,10 +23,16 @@ export const connect = (mapStateToProps) => (WrappedComponent)=>{
 
         private updateProps() {
             const { store } = this.context;
-            const stateProps = mapStateToProps(store.getState(), this.props);
+            const stateProps = mapStateToProps 
+                ? mapStateToProps(store.getState(), this.props)
+                : {};
+            const dispatchProps = mapDispatchToProps
+                ? mapDispatchToProps(store.dispatch, this.props)
+                : {};
             this.setState({
                 allProps: {
                     ...stateProps,
+                    ...dispatchProps,
                     ...this.props
                 }
             })

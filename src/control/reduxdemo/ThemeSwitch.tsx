@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { Component } from "react";
+import { connect } from 'react-redux';
 
-interface ThemeSwitchProps {}
+interface ThemeSwitchProps {
+    themeColor?: string;
+    onSwitchColor?: (color?: string)=> void;
+}
 interface ThemeSwitchStates {
     themeColor?: string;
 }
 
-export class ThemeSwitch extends Component<ThemeSwitchProps,ThemeSwitchStates>{
+class ThemeSwitch extends Component<ThemeSwitchProps,ThemeSwitchStates>{
     constructor(props,context){
       super();
       this.state={
@@ -14,38 +18,36 @@ export class ThemeSwitch extends Component<ThemeSwitchProps,ThemeSwitchStates>{
        };
     } 
 
-    static contextTypes = {
-        store: React.PropTypes.any
-    }
-
-    componentWillMount() {
-        const { store } = this.context;
-        this.updateThemeColor()
-        store.subscribe(()=> this.updateThemeColor());
-    }
-
-    private updateThemeColor() {
-        const { store } = this.context;
-        const state = store.getState();
-        this.setState({themeColor: state.themeColor})
-    }
-
     handleSwitchColor(color?: string) {
-        const { store } = this.context;
-        store.dispatch({
-            type: 'CHANGE_COLOR',
-            themeColor: color
-        })
+        if(this.props.onSwitchColor){
+            this.props.onSwitchColor(color);
+        }
     }
 
     render() {
         return <div>
             <button
                 onClick={this.handleSwitchColor.bind(this, "red")}
-                 style={{color: this.state.themeColor}}>Red</button>
+                 style={{color: this.props.themeColor}}>Red</button>
             <button
                 onClick={this.handleSwitchColor.bind(this, "blue")}
-                 style={{color: this.state.themeColor}}>Blue</button>
+                 style={{color: this.props.themeColor}}>Blue</button>
         </div>
     }
 }
+
+const mapStateToProps = (state)=> {
+    return {
+        themeColor: state.themeColor
+    }
+}
+
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        onSwitchColor: (color)=> {
+            dispatch({type: "CHANGE_COLOR", themeColor: color});
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch)

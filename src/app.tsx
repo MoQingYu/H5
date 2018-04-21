@@ -35,7 +35,7 @@ export class HomePage extends Component<HomePageProps,HomePageStates>{
                 </Header>
                 <Content>
                   {showContent ? <ContentPage/> : undefined}
-                  <button onClick={this.contentShowOrHide.bind(this)}>{"点我一下"}</button>
+                  {/* <button onClick={this.contentShowOrHide.bind(this)}>{"点我一下"}</button> */}
                 </Content>
                 <Footer>Footer</Footer>
               </Layout>
