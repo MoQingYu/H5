@@ -28,7 +28,6 @@ export class LikeButton extends React.Component<LikeButtonProps, LikeButtonState
     }
 
     render() {
-        debugger;
         const { isLiked } = this.state;
         let { LikedText, unlikedText } = this.props;
         LikedText = LikedText || "取消"
