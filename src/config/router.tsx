@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Frame } from "./frame";
-import { Router, Route, hashHistory } from "react-router";
-import * as test from "react-router";
-console.log(hashHistory);
+import createBrowserHistory from 'history/createBrowserHistory';
+import { Router, Route } from "react-router-dom";
+const hashHistory = createBrowserHistory();
 export const router = (
-    <Router>
+    <Router history={hashHistory}>
         <Route path="/" component={Frame}></Route>
     </Router>
 )
