@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Layout } from "antd";
 import { render } from 'react-dom';
 import * as ReactDOM from "react-dom";
-import { HeaderPage } from "./control/header";
+// import { HeaderPage } from "./control/header";
 import { ContentPage } from "./control/content";
 import './public/common.less';
 
@@ -31,7 +31,7 @@ export class HomePage extends Component<HomePageProps,HomePageStates>{
       return <div>
               <Layout>
                 <Header className="pageheader">
-                  <HeaderPage/>
+                  {/* <HeaderPage/> */}
                 </Header>
                 <Content>
                   {showContent ? <ContentPage/> : undefined}

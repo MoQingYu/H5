@@ -34,7 +34,7 @@ var plugins = [
         }
     })
 ]
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+plugins.push(new webpack.HotModuleReplacementPlugin());
 
 var publicPath = "./index/";
 module.exports = {

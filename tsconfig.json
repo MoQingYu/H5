@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es5",
+    "outDir": "./src",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  },
+  "files": [
+    "./src/app.tsx"
+  ]
+}
