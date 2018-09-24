@@ -1,10 +1,15 @@
 import * as React from "react";
 import { Frame } from "./frame";
 import createBrowserHistory from 'history/createBrowserHistory';
-import { Router, Route } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
+import { HomePage } from "../page/";
+
 const hashHistory = createBrowserHistory();
+
 export const router = (
-    <Router history={hashHistory}>
-        <Route path="/" component={Frame}></Route>
-    </Router>
+	<BrowserRouter>
+		<Frame history={hashHistory}>
+			<Route path="/" component={HomePage}></Route>
+		</Frame>
+	</BrowserRouter>
 )
