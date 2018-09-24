@@ -5,7 +5,6 @@ import { Route, BrowserRouter } from "react-router-dom";
 import { HomePage } from "../page/";
 
 const hashHistory = createBrowserHistory();
-
 export const router = (
 	<BrowserRouter>
 		<Frame history={hashHistory}>
