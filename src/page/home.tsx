@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from "react";
 import { Button } from "antd";
-import { ajax } from "../public/http";
+import http from "../public/http";
 
 interface HomePageProps { };
 interface HomePageState { };
@@ -17,7 +17,7 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
 	}
 
 	async handleClick() {
-		ajax.get("http://127.0.0.1:3000/").then((res)=>{
+		http("http://127.0.0.1:8081/").then((res)=>{
 			console.log(res);
 		})
 	}
