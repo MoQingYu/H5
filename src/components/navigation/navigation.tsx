@@ -19,13 +19,12 @@ export class Navigation extends Component<NavigationProps, NavigationState>{
 
 	render() {
 		const { location } = this.props;
-		console.log(location.pathname);
 		return <Menu mode="inline" theme="dark"
 			selectedKeys={[location.pathname]}>
 			{
 				navigation.map(d => {
 					const content = <Link to={d.path}>
-						<Icon type={d.icon} theme="outlined" />
+						<Icon type={d.icon} />
 						<span>{d.name}</span>
 					</Link>
 					return <Item key={d.path}>{content}</Item >
