@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from "react";
 import { Layout } from "antd";
-import { VWHeader } from "../components/header/header";
+import VWHeader from "../components/header/header";
 import '../public/common.less';
 import { Navigation } from "../components/navigation/navigation";
 
