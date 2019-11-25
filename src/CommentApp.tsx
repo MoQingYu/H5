@@ -3,6 +3,7 @@ import { Component } from "react";
 import CommentInput from "./CommentInput";
 import CommentList from "./CommentList";
 import { commentModal } from "./Comment";
+import { connect } from "react-redux";
 
 interface CommentAppProps {
   
@@ -12,9 +13,9 @@ interface CommentAppStates {
 
 }
 
-export default class CommentApp extends Component<CommentAppProps, CommentAppStates> {
+class CommentApp extends Component<CommentAppProps, CommentAppStates> {
   constructor(props,context){
-    super();
+    super(props,context);
     this.state={
       comments: []
     };
@@ -38,6 +39,7 @@ export default class CommentApp extends Component<CommentAppProps, CommentAppSta
 
   render() {
     const { comments } = this.state;
+    console.log(this.props);
     return (
       <div className="wrapper">
         <CommentInput onSubmit={this._handleSubmit.bind(this)}/>
@@ -58,3 +60,9 @@ export default class CommentApp extends Component<CommentAppProps, CommentAppSta
   }
 
 }
+const mapStateToProps = (state) => {
+  return {
+    propData: state
+  };
+};
+export default connect(mapStateToProps)(CommentApp);

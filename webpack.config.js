@@ -76,11 +76,7 @@ module.exports = {
     plugins: plugins,
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        alias: {},        
-        modules: [
-            path.join(__dirname, "src"),
-            "node_modules"
-        ]
+        alias: {}, 
     },
     externals: {}
 }

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Component } from "react";
 import { Layout } from "antd";
-import * as ReactDOM from "react-dom";
+import { Provider } from "react-redux"
+import { render } from "react-dom";
 import CommentApp from './CommentApp'
 import './static/common.less';
+import store from "./redux";
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,7 +17,7 @@ interface HomePageStates {
 
 export class HomePage extends Component<HomePageProps,HomePageStates>{
   constructor(props,context){
-    super();
+    super(props,context);
     this.state={
     };
   }
@@ -30,5 +32,8 @@ export class HomePage extends Component<HomePageProps,HomePageStates>{
     </div>
   }
 }
-
-ReactDOM.render(<HomePage/>,document.getElementById("app"))
+render(
+  <Provider store={store}>
+    <HomePage/>
+  </Provider>
+  ,document.getElementById("app"))
