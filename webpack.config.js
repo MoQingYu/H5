@@ -1,87 +1,84 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer"); 
+const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
+const isPub = process.env.ENV == "pub";
 
-// 项目根路径
-var ROOT_PATH = path.resolve(__dirname);
-// 项目源码路径
-var SRC_PATH = path.resolve(ROOT_PATH, 'src');
-// 产出路径
-var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
-
-
-var proxy = {};
-var plugins = [
-    new ExtractTextPlugin('app.css'),
-    new HtmlWebpackPlugin({
-        favicon: './favicon.ico', //favicon路径
-        filename: './index.html',
-        template: "./src/index.html",
-        inject: true,
-        hash: true,
-        minify: {
-            removeComments: true,
-            collapseWhitespace: false,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true
-        }
-    })
-]
-    plugins.push(new webpack.HotModuleReplacementPlugin());
-
-var publicPath = "./index/";
 module.exports = {
-    devtool: 'source-map',
-    entry: {
-        app: ['./src/app']
-    },
-    output: {
-        path: "/",
-        publicPath: '/',
-        filename: '[name].js',
-    },
-    devServer: {
-        proxy: proxy,
-        host: '127.0.0.1'
-    },
-    module: {
-        rules: [{
-            test: /\.tsx|\.ts$/,
-            exclude: /^node_modules$/,
-            use: 'awesome-typescript-loader'
-                // loader: 'ts-loader'
-        }, {
-            test: /\.(less|css)$/,
-            exclude: /^node_modules$/,
-            // loader: ExtractTextPlugin.extract('style-loader', "css-loader?minimize!less-loader?compress")
-            use: ExtractTextPlugin.extract({
-                fallback: "style-loader",
-                use: [
-                    "css-loader",
-                    "less-loader"
-                ]
-            })
-        }, {
-            test: /\.(jpe?g|png|gif|svg)$/,
-            // use: 'url?limit=10000&name=img/[hash].[ext]'
-            use: "file-loader"
-        }]
-    },
-    plugins: plugins,
-    resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        alias: {},        
-        modules: [
-            path.join(__dirname, "src"),
-            "node_modules"
+  mode: isPub ? "production" : "development",
+  entry: {
+    app: "./src/app.tsx",
+  },
+  output: {
+    filename: "[name]_bundle.js",
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "/"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(tsx|ts)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      }, {
+        test: /\.(css|less)$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              }
+            }
+          }
         ]
-    },
-    externals: {}
+      }, {
+        test: /\.(png|jpg|gif|jpeg)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              // 当图片小于3000B时，使用url-loader处理图片, 否则使用file-loader
+              limit: 3000,
+              fallback: "file-loader",
+              name: "[name].[hash:7].[ext]",
+              outputPath: "images/"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+      favicon: "./public/favicon.ico",
+      filename: "index.html",
+      hash: true,
+    }),
+    // new BundleAnalyzerPlugin(),
+  ],
+  devtool: "cheap-module-source-map",
+  devServer: {
+    // 非根路由下刷新报错
+    historyApiFallback: true,
+    contentBase: path.join(__dirname, "dist"),
+    port: 9900,
+    compress: true,
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", '.js', '.jsx'],
+    plugins: [
+      new TsconfigPathsWebpackPlugin({
+        configFile: path.resolve(__dirname, './tsconfig.json'),
+      })
+    ]
+  }
 }

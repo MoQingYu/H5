@@ -1,15 +1,25 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "module": "commonjs",
-        "target": "es5",
-        "outDir": "./src",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "jsx": "react",
-        "allowSyntheticDefaultImports": true
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "rootDir": "src",
+    "baseUrl": "./src",
+    "paths": {
+      "@page/*": ["pages/*"],
+      "@router/*": ["router/*"],
+      "@assets/*": ["assets/*"],
+      "@store/*": ["store/*"],
+      "@locales": ["locales", "locales/*"],
     },
-    "files": [
-      "./src/app.tsx"
-    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
